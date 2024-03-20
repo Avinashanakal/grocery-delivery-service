@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "ba421827-e3a5-4813-bf3f-d24bb4a07f0a",
+		"name": "Grocery Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24938769",
+		"_collection_link": "https://www.postman.com/gold-station-373414/workspace/grocery-service/collection/24938769-ba421827-e3a5-4813-bf3f-d24bb4a07f0a?action=share&source=collection_link&creator=24938769"
+	},
+	"item": [
+		{
+			"name": "Add Grocery",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Bananas\",\n  \"description\": \"Yellow Bananas\",\n  \"price\": 40,\n  \"quantity\": 5\n}"
+				},
+				"url": {
+					"raw": "http://localhost:90/v1/grocery/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "90",
+					"path": [
+						"v1",
+						"grocery",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:90/v1/grocery/search?q=Bananas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "90",
+					"path": [
+						"v1",
+						"grocery",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Bananas"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customer_id\": 1,\n    \"order_items\": [\n      {\n        \"grocery_id\": 1,\n        \"quantity\": 2\n      },\n      {\n        \"grocery_id\": 2,\n        \"quantity\": 3\n      }\n    ]\n  }"
+				},
+				"url": {
+					"raw": "http://localhost:90/v1/grocery/buy",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "90",
+					"path": [
+						"v1",
+						"grocery",
+						"buy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:90/v1/grocery/orders/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "90",
+					"path": [
+						"v1",
+						"grocery",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

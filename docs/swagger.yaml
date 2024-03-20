@@ -1,0 +1,172 @@
+openapi: 3.0.0
+info:
+  title: Grocery Store API
+  version: 1.0.0
+servers:
+  - url: "http://localhost:80"
+paths:
+  /v1/grocery/:
+    post:
+      summary: Add a grocery item to the inventory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Bananas"
+                description:
+                  type: string
+                  example: "Yellow Bananas"
+                price:
+                  type: number
+                  example: 40
+                quantity:
+                  type: integer
+                  example: 5
+              example:
+                name: "Bananas"
+                description: "Yellow Bananas"
+                price: 40
+                quantity: 5
+      responses:
+        '200':
+          description: Groceries Added to Inventory
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+
+  /v1/grocery/search:
+    get:
+      summary: Search for groceries
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+            example: "Bananas"
+          required: true
+      responses:
+        '200':
+          description: List of matching groceries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 4
+                    name:
+                      type: string
+                      example: "Bananas"
+                    description:
+                      type: string
+                      example: "Yellow Bananas"
+                    price:
+                      type: number
+                      example: 40
+
+  /v1/grocery/buy:
+    post:
+      summary: Buy groceries and create an order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: integer
+                  example: 1
+                order_items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      grocery_id:
+                        type: integer
+                        example: 1
+                      quantity:
+                        type: integer
+                        example: 6
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  customer_id:
+                    type: integer
+                  order_date:
+                    type: string
+                    format: date-time
+                  delivery_date:
+                    type: string
+                    format: date-time
+                  total_price:
+                    type: number
+                  status:
+                    type: string
+
+  /v1/grocery/orders/{customer_id}:
+    get:
+      summary: Get orders for a customer
+      parameters:
+        - in: path
+          name: customer_id
+          schema:
+            type: integer
+            example: 1
+          required: true
+      responses:
+        '200':
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderResponse'
+
+components:
+  schemas:
+    OrderResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        customer_id:
+          type: integer
+        status:
+          type: string
+        price:
+          type: number
+        order_items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              order_id:
+                type: integer
+              grocery_id:
+                type: integer
+              quantity:
+                type: integer
